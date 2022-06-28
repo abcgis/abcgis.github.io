@@ -1,43 +1,665 @@
-const { Component } = require('inferno');
-const classname = require('hexo-component-inferno/lib/util/classname');
-const Head = require('./common/head');
-const Navbar = require('./common/navbar');
-const Widgets = require('./common/widgets');
-const Footer = require('./common/footer');
-const Scripts = require('./common/scripts');
-const Search = require('./common/search');
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-module.exports = class extends Component {
-    render() {
-        const { site, config, page, helper, body } = this.props;
+<link rel="stylesheet" href="/css/main.css">
 
-        const language = page.lang || page.language || config.language;
-        const columnCount = Widgets.getColumnCount(config.widgets, config, page);
 
-        return <html lang={language ? language.substr(0, 2) : ''}>
-            <Head site={site} config={config} helper={helper} page={page} />
-            <body class={`is-${columnCount}-column`}>
-                <Navbar config={config} helper={helper} page={page} />
-                <section class="section">
-                    <div class="container">
-                        <div class="columns">
-                            <div class={classname({
-                                column: true,
-                                'order-2': true,
-                                'column-main': true,
-                                'is-12': columnCount === 1,
-                                'is-8-tablet is-8-desktop is-8-widescreen': columnCount === 2,
-                                'is-8-tablet is-8-desktop is-6-widescreen': columnCount === 3
-                            })} dangerouslySetInnerHTML={{ __html: body }}></div>
-                            <Widgets site={site} config={config} helper={helper} page={page} position={'left'} />
-                            <Widgets site={site} config={config} helper={helper} page={page} position={'right'} />
-                        </div>
-                    </div>
-                </section>
-                <Footer config={config} helper={helper} />
-                <Scripts site={site} config={config} helper={helper} page={page} />
-                <Search config={config} helper={helper} />
-            </body>
-        </html>;
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"abcgis.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="AI+BigData+Cloud+GIS">
+<meta property="og:url" content="http://abcgis.github.io/index.html">
+<meta property="og:site_name" content="AI+BigData+Cloud+GIS">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="abcgis.com">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://abcgis.github.io/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>AI+BigData+Cloud+GIS</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AI+BigData+Cloud+GIS</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://abcgis.github.io/2022/06/27/20220627-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="abcgis.com">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AI+BigData+Cloud+GIS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/27/20220627-3/" class="post-title-link" itemprop="url">What is GIS?</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-27 22:05:29" itemprop="dateCreated datePublished" datetime="2022-06-27T22:05:29+08:00">2022-06-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-06-28 08:07:48" itemprop="dateModified" datetime="2022-06-28T08:07:48+08:00">2022-06-28</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>A geographic information system (GIS) is a system that creates, manages, analyzes, and maps all types of data. GIS connects data to a map, integrating location data (where things are) with all types of descriptive information (what things are like there). This provides a foundation for mapping and analysis that is used in science and almost every industry. GIS helps users understand patterns, relationships, and geographic context. The benefits include improved communication and efficiency as well as better management and decision making.</p>
+<p><img src="https://www.esri.com/content/dam/esrisites/en-us/about/what-is-gis/assets/image-switcher-maps/perform-forecasting-what-is-gis-image-switcher.jpg" alt="GIS"></p>
+<h1 id="How-is-GIS-used"><a href="#How-is-GIS-used" class="headerlink" title="How is GIS used?"></a>How is GIS used?</h1><p>Hundreds of thousands of organizations in virtually every field are using GIS to make maps that communicate, perform analysis, share information, and solve complex problems around the world. This is changing the way the world works.</p>
+<h2 id="Identify-problems"><a href="#Identify-problems" class="headerlink" title="Identify problems"></a>Identify problems</h2><p>Illuminate issues that are driven by geography. In this story, maps and visualizations connect present-day environmental inequalities to redlining policies.</p>
+<h2 id="Monitor-change"><a href="#Monitor-change" class="headerlink" title="Monitor change"></a>Monitor change</h2><p>Visualize and communicate change. This story uses maps to show how humans impact our warming planet and shares what we can do to create a more sustainable future.</p>
+<h2 id="Manage-and-respond-to-events"><a href="#Manage-and-respond-to-events" class="headerlink" title="Manage and respond to events"></a>Manage and respond to events</h2><p>GIS delivers real-time situational awareness. The maps in this story help us understand the spread of COVID-19 and the global impact of the pandemic.</p>
+<h2 id="Perform-forecasting"><a href="#Perform-forecasting" class="headerlink" title="Perform forecasting"></a>Perform forecasting</h2><p>The maps in this story reveal how coastal communities are impacted by sea level rise and explore data that can help us predict and prepare for flooding.</p>
+<h2 id="Set-priorities"><a href="#Set-priorities" class="headerlink" title="Set priorities"></a>Set priorities</h2><p>By analyzing soil health, farmers can determine when and where to plant certain crops, maximizing yield while minimizing environmental impact.</p>
+<h2 id="Understand-trends"><a href="#Understand-trends" class="headerlink" title="Understand trends"></a>Understand trends</h2><p>Visualize data with GIS to gain insights that might be missed in a spreadsheet. This story uses maps to understand bird populations and migration routes.</p>
+<h1 id="How-does-GIS-work"><a href="#How-does-GIS-work" class="headerlink" title="How does GIS work?"></a>How does GIS work?</h1><p>GIS technology applies geographic science with tools for understanding and collaboration. It helps people reach a common goal: to gain actionable intelligence from all types of data.</p>
+<h2 id="Maps"><a href="#Maps" class="headerlink" title="Maps"></a>Maps</h2><p>Maps are the geographic container for the data layers and analytics you want to work with. GIS maps are easily shared and embedded in apps, and accessible by virtually everyone, everywhere.</p>
+<h2 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h2><p>GIS integrates many different kinds of data layers using spatial location. Most data has a geographic component. GIS data includes imagery, features, and basemaps linked to spreadsheets and tables.</p>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>Spatial analysis lets you evaluate suitability and capability, estimate and predict, interpret and understand, and much more, lending new perspectives to your insight and decision-making.</p>
+<h2 id="Apps"><a href="#Apps" class="headerlink" title="Apps"></a>Apps</h2><p>Apps provide focused user experiences for getting work done and bringing GIS to life for everyone. GIS apps work virtually everywhere: on your mobile phones, tablets, in web browsers, and on desktops.</p>
+<h1 id="Who-uses-GIS"><a href="#Who-uses-GIS" class="headerlink" title="Who uses GIS?"></a>Who uses GIS?</h1><p>Modern GIS is about participation, sharing, and collaboration. Discover how the technology is strengthening relationships, driving efficiencies, and opening communications channels in your community.</p>
+<ul>
+<li>Education</li>
+<li>Health</li>
+<li>Insurance</li>
+<li>Manufacturing</li>
+<li>Petroleum</li>
+<li>Public Safety</li>
+<li>Real Estate</li>
+<li>Retail</li>
+<li>Sustainability</li>
+<li>Telecommunications</li>
+<li>Transportation</li>
+<li>Electric and Gas Utilities</li>
+<li>Natural Resources</li>
+<li>Government</li>
+<li>Water</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://abcgis.github.io/2022/06/27/20220627-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="abcgis.com">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AI+BigData+Cloud+GIS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/27/20220627-2/" class="post-title-link" itemprop="url">What is the cloud?</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-06-27 21:56:42 / 修改时间：22:01:31" itemprop="dateCreated datePublished" datetime="2022-06-27T21:56:42+08:00">2022-06-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“The cloud” refers to servers that are accessed over the Internet, and the software and databases that run on those servers. Cloud servers are located in data centers all over the world. By using cloud computing, users and companies do not have to manage physical servers themselves or run software applications on their own machines.<br><img src="https://cf-assets.www.cloudflare.com/slt3lc6tev37/3YT0gya2bkUeuMrnGxhjAZ/4146c20c214cf001c74c0868ddfb9503/what-is-the-cloud.png" alt="The Cloud"></p>
+<p>What is the Cloud Diagram<br>The cloud enables users to access the same files and applications from almost any device, because the computing and storage takes place on servers in a data center, instead of locally on the user device. This is why a user can log in to their Instagram account on a new phone after their old phone breaks and still find their old account in place, with all their photos, videos, and conversation history. It works the same way with cloud email providers like Gmail or Microsoft Office 365, and with cloud storage providers like Dropbox or Google Drive.</p>
+<p>For businesses, switching to cloud computing removes some IT costs and overhead: for instance, they no longer need to update and maintain their own servers, as the cloud vendor they are using will do that. This especially makes an impact for small businesses that may not have been able to afford their own internal infrastructure but can outsource their infrastructure needs affordably via the cloud. The cloud can also make it easier for companies to operate internationally, because employees and customers can access the same files and applications from any location.</p>
+<h1 id="How-does-cloud-computing-work"><a href="#How-does-cloud-computing-work" class="headerlink" title="How does cloud computing work?"></a>How does cloud computing work?</h1><p>Cloud computing is possible because of a technology called virtualization. Virtualization allows for the creation of a simulated, digital-only “virtual” computer that behaves as if it were a physical computer with its own hardware. The technical term for such a computer is virtual machine. When properly implemented, virtual machines on the same host machine are sandboxed from one another, so they do not interact with each other at all, and the files and applications from one virtual machine are not visible to the other virtual machines even though they are on the same physical machine.</p>
+<p>Virtual machines also make more efficient use of the hardware hosting them. By running many virtual machines at once, one server becomes many servers, and a data center becomes a whole host of data centers, able to serve many organizations. Thus, cloud providers can offer the use of their servers to far more customers at once than they would be able to otherwise, and they can do so at a low cost.</p>
+<p>Even if individual servers go down, cloud servers in general should be always online and always available. Cloud vendors generally back up their services on multiple machines and across multiple regions.</p>
+<p>Users access cloud services either through a browser or through an app, connecting to the cloud over the Internet — that is, through many interconnected networks — regardless of what device they are using.</p>
+<h1 id="What-are-the-main-service-models-of-cloud-computing"><a href="#What-are-the-main-service-models-of-cloud-computing" class="headerlink" title="What are the main service models of cloud computing?"></a>What are the main service models of cloud computing?</h1><p><img src="https://www.cloudflare.com/img/learning/serverless/glossary/platform-as-a-service-paas/saas-paas-iaas-diagram.svg" alt="models"></p>
+<p><strong>Software-as-a-Service (SaaS)</strong>: Instead of users installing an application on their device, SaaS applications are hosted on cloud servers, and users access them over the Internet. SaaS is like renting a house: the landlord maintains the house, but the tenant mostly gets to use it as if they owned it. Examples of SaaS applications include Salesforce, MailChimp, and Slack.</p>
+<p><strong>Platform-as-a-Service (PaaS)</strong>: In this model, companies don’t pay for hosted applications; instead they pay for the things they need to build their own applications. PaaS vendors offer everything necessary for building an application, including development tools, infrastructure, and operating systems, over the Internet. PaaS can be compared to renting all the tools and equipment necessary for building a house, instead of renting the house itself. PaaS examples include Heroku and Microsoft Azure.</p>
+<p><strong>Infrastructure-as-a-Service (IaaS)</strong>: In this model, a company rents the servers and storage they need from a cloud provider. They then use that cloud infrastructure to build their applications. IaaS is like a company leasing a plot of land on which they can build whatever they want — but they need to provide their own building equipment and materials. IaaS providers include DigitalOcean, Google Compute Engine, and OpenStack.</p>
+<p>Formerly, SaaS, PaaS, and IaaS were the three main models of cloud computing, and essentially all cloud services fit into one of these categories. However, in recent years a fourth model has emerged:</p>
+<p><strong>Function-as-a-Service (FaaS)</strong>: FaaS, also known as serverless computing, breaks cloud applications down into even smaller components that only run when they are needed. Imagine if it were possible to rent a house one little bit at a time: for instance, the tenant only pays for the dining room at dinner time, the bedroom while they are sleeping, the living room while they are watching TV, and when they are not using those rooms, they don’t have to pay rent on them.</p>
+<p>FaaS or serverless applications still run on servers, as do all these models of cloud computing. But they are called “serverless” because they do not run on dedicated machines, and because the companies building the applications do not have to manage any servers.</p>
+<p>Also, serverless functions scale up, or duplicate, as more people use the application — imagine if the tenant’s dining room could expand on demand when more people come over for dinner! Learn more about serverless computing (FaaS).</p>
+<h1 id="What-are-the-different-types-of-cloud-deployments"><a href="#What-are-the-different-types-of-cloud-deployments" class="headerlink" title="What are the different types of cloud deployments?"></a>What are the different types of cloud deployments?</h1><p>In contrast to the models discussed above, which define how services are offered via the cloud, these different cloud deployment types have to do with where the cloud servers are and who manages them.</p>
+<p>The most common cloud deployments are:</p>
+<ul>
+<li><p><strong>Private cloud</strong>: A private cloud is a server, data center, or distributed network wholly dedicated to one organization.</p>
+</li>
+<li><p><strong>Public cloud</strong>: A public cloud is a service run by an external vendor that may include servers in one or multiple data centers. Unlike a private cloud, public clouds are shared by multiple organizations. Using virtual machines, individual servers may be shared by different companies, a situation that is called “multitenancy” because multiple tenants are renting server space within the same server.</p>
+</li>
+<li><p><strong>Hybrid cloud</strong>: hybrid cloud deployments combine public and private clouds, and may even include on-premises legacy servers. An organization may use their private cloud for some services and their public cloud for others, or they may use the public cloud as backup for their private cloud.</p>
+</li>
+<li><p><strong>Multi-cloud</strong>: multi-cloud is a type of cloud deployment that involves using multiple public clouds. In other words, an organization with a multi-cloud deployment rents virtual servers and services from several external vendors — to continue the analogy used above, this is like leasing several adjacent plots of land from different landlords. Multi-cloud deployments can also be hybrid cloud, and vice versa.</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://abcgis.github.io/2022/06/27/20220627-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="abcgis.com">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AI+BigData+Cloud+GIS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/27/20220627-1/" class="post-title-link" itemprop="url">What is Big Data?</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-06-27 21:40:13 / 修改时间：22:05:48" itemprop="dateCreated datePublished" datetime="2022-06-27T21:40:13+08:00">2022-06-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Big data can be described in terms of data management challenges that – due to increasing volume, velocity and variety of data – cannot be solved with traditional databases. While there are plenty of definitions for big data, most of them include the concept of what’s commonly known as “three V’s” of big data:</p>
+<p><strong>Volume</strong>: Ranges from terabytes to petabytes of data</p>
+<p><strong>Variety</strong>: Includes data from a wide range of sources and formats (e.g. web logs, social media interactions, ecommerce and online transactions, financial transactions, etc)</p>
+<p><strong>Velocity</strong>: Increasingly, businesses have stringent requirements from the time data is generated, to the time actionable insights are delivered to the users. Therefore, data needs to be collected, stored, processed, and analyzed within relatively short windows – ranging from daily to real-time</p>
+<h1 id="Why-You-May-Need-Big-Data"><a href="#Why-You-May-Need-Big-Data" class="headerlink" title="Why You May Need Big Data?"></a>Why You May Need Big Data?</h1><p>Despite the hype, many organizations don’t realize they have a big data problem or they simply don’t think of it in terms of big data. In general, an organization is likely to benefit from big data technologies when existing databases and applications can no longer scale to support sudden increases in volume, variety, and velocity of data.<br>Failure to correctly address big data challenges can result in escalating costs, as well as reduced productivity and competitiveness. On the other hand, a sound big data strategy can help organizations reduce costs and gain operational efficiencies by migrating heavy existing workloads to big data technologies; as well as deploying new applications to capitalize on new opportunities.</p>
+<h1 id="How-Does-Big-Data-Work"><a href="#How-Does-Big-Data-Work" class="headerlink" title="How Does Big Data Work?"></a>How Does Big Data Work?</h1><p>With new tools that address the entire data management cycle, big data technologies make it technically and economically feasible, not only to collect and store larger datasets, but also to analyze them in order to uncover new and valuable insights. In most cases, big data processing involves a common data flow – from collection of raw data to consumption of actionable information.</p>
+<p><strong>Collect</strong>. Collecting the raw data – transactions, logs, mobile devices and more – is the first challenge many organizations face when dealing with big data. A good big data platform makes this step easier, allowing developers to ingest a wide variety of data – from structured to unstructured – at any speed – from real-time to batch.</p>
+<p><strong>Store</strong>. Any big data platform needs a secure, scalable, and durable repository to store data prior or even after processing tasks. Depending on your specific requirements, you may also need temporary stores for data in-transit.</p>
+<p><strong>Process &amp; Analyze</strong>. This is the step where data is transformed from its raw state into a consumable format – usually by means of sorting, aggregating, joining and even performing more advanced functions and algorithms. The resulting data sets are then stored for further processing or made available for consumption via business intelligence and data visualization tools.</p>
+<p><strong>Consume &amp; Visualize</strong>. Big data is all about getting high value, actionable insights from your data assets. Ideally, data is made available to stakeholders through self-service business intelligence and agile data visualization tools that allow for fast and easy exploration of datasets. Depending on the type of analytics, end-users may also consume the resulting data in the form of statistical “predictions” – in the case of predictive analytics – or recommended actions – in the case of prescriptive analytics.</p>
+<h1 id="The-Evolution-of-Big-Data-Processing"><a href="#The-Evolution-of-Big-Data-Processing" class="headerlink" title="The Evolution of Big Data Processing"></a>The Evolution of Big Data Processing</h1><p>The big data ecosystem continues to evolve at an impressive pace. Today, a diverse set of analytic styles support multiple functions within the organization.</p>
+<p><strong>Descriptive analytics</strong> help users answer the question: “What happened and why?” Examples include traditional query and reporting environments with scorecards and dashboards.</p>
+<p><strong>Predictive analytics</strong> help users estimate the probability of a given event in the feature. Examples include early alert systems, fraud detection, preventive maintenance applications, and forecasting.</p>
+<p><strong>Prescriptive analytics</strong> provide specific (prescriptive) recommendations to the user. They address the question – What should I do if “x” happens?</p>
+<p>Originally, big data frameworks such as Hadoop, supported only batch workloads, where large datasets were processed in bulk during a specified time window typically measured in hours if not days. However, as time-to-insight became more important, the “velocity” of big data has fueled the evolution of new frameworks such as Apache Spark, Apache Kafka, Amazon Kinesis and others, to support real-time and streaming data processing.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://abcgis.github.io/2022/06/25/20220625/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="abcgis.com">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AI+BigData+Cloud+GIS">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/25/20220625/" class="post-title-link" itemprop="url">Artificial Intelligence (AI)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-25 23:54:52" itemprop="dateCreated datePublished" datetime="2022-06-25T23:54:52+08:00">2022-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-06-26 00:14:15" itemprop="dateModified" datetime="2022-06-26T00:14:15+08:00">2022-06-26</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>Artificial intelligence leverages computers and machines to mimic the problem-solving and decision-making capabilities of the human mind.</li>
+</ul>
+<h1 id="What-is-artificial-intelligence"><a href="#What-is-artificial-intelligence" class="headerlink" title="What is artificial intelligence?"></a>What is artificial intelligence?</h1><p>While a number of definitions of artificial intelligence (AI) have surfaced over the last few decades, John McCarthy offers the following definition in this 2004 paper (PDF, 106 KB) (link resides outside IBM), “ It is the science and engineering of making intelligent machines, especially intelligent computer programs. It is related to the similar task of using computers to understand human intelligence, but AI does not have to confine itself to methods that are biologically observable.”</p>
+<p>However, decades before this definition, the birth of the artificial intelligence conversation was denoted by Alan Turing’s seminal work, “Computing Machinery and Intelligence” (PDF, 89.8 KB) (link resides outside of IBM), which was published in 1950. In this paper, Turing, often referred to as the “father of computer science”, asks the following question, “Can machines think?”  From there, he offers a test, now famously known as the “Turing Test”, where a human interrogator would try to distinguish between a computer and human text response. While this test has undergone much scrutiny since its publish, it remains an important part of the history of AI as well as an ongoing concept within philosophy as it utilizes ideas around linguistics.</p>
+<p>Stuart Russell and Peter Norvig then proceeded to publish, Artificial Intelligence: A Modern Approach (link resides outside IBM), becoming one of the leading textbooks in the study of AI. In it, they delve into four potential goals or definitions of AI, which differentiates computer systems on the basis of rationality and thinking vs. acting:</p>
+<h2 id="Human-approach"><a href="#Human-approach" class="headerlink" title="Human approach:"></a>Human approach:</h2><ul>
+<li>Systems that think like humans</li>
+<li>Systems that act like humans</li>
+</ul>
+<h2 id="Ideal-approach"><a href="#Ideal-approach" class="headerlink" title="Ideal approach:"></a>Ideal approach:</h2><ul>
+<li>Systems that think rationally</li>
+<li>Systems that act rationally</li>
+</ul>
+<p>Alan Turing’s definition would have fallen under the category of “systems that act like humans.”</p>
+<p>At its simplest form, artificial intelligence is a field, which combines computer science and robust datasets, to enable problem-solving. It also encompasses sub-fields of machine learning and deep learning, which are frequently mentioned in conjunction with artificial intelligence. These disciplines are comprised of AI algorithms which seek to create expert systems which make predictions or classifications based on input data.</p>
+<p>Today, a lot of hype still surrounds AI development, which is expected of any new emerging technology in the market. As noted in Gartner’s hype cycle (link resides outside IBM), product innovations like, self-driving cars and personal assistants, follow “a typical progression of innovation, from overenthusiasm through a period of disillusionment to an eventual understanding of the innovation’s relevance and role in a market or domain.” As Lex Fridman notes here (01:08:15) (link resides outside IBM) in his MIT lecture in 2019, we are at the peak of inflated expectations, approaching the trough of disillusionment.  </p>
+<p>As conversations emerge around the ethics of AI, we can begin to see the initial glimpses of the trough of disillusionment. To read more on where IBM stands within the conversation around AI ethics, read more here.</p>
+<h1 id="Types-of-artificial-intelligence—weak-AI-vs-strong-AI"><a href="#Types-of-artificial-intelligence—weak-AI-vs-strong-AI" class="headerlink" title="Types of artificial intelligence—weak AI vs. strong AI"></a>Types of artificial intelligence—weak AI vs. strong AI</h1><p>Weak AI—also called Narrow AI or Artificial Narrow Intelligence (ANI)—is AI trained and focused to perform specific tasks. Weak AI drives most of the AI that surrounds us today. ‘Narrow’ might be a more accurate descriptor for this type of AI as it is anything but weak; it enables some very robust applications, such as Apple’s Siri, Amazon’s Alexa, IBM Watson, and autonomous vehicles.</p>
+<p>Strong AI is made up of Artificial General Intelligence (AGI) and Artificial Super Intelligence (ASI). Artificial general intelligence (AGI), or general AI, is a theoretical form of AI where a machine would have an intelligence equaled to humans; it would have a self-aware consciousness that has the ability to solve problems, learn, and plan for the future. Artificial Super Intelligence (ASI)—also known as superintelligence—would surpass the intelligence and ability of the human brain. While strong AI is still entirely theoretical with no practical examples in use today, that doesn’t mean AI researchers aren’t also exploring its development. In the meantime, the best examples of ASI might be from science fiction, such as HAL, the superhuman, rogue computer assistant in 2001: A Space Odyssey.</p>
+<h1 id="Deep-learning-vs-machine-learning"><a href="#Deep-learning-vs-machine-learning" class="headerlink" title="Deep learning vs. machine learning"></a>Deep learning vs. machine learning</h1><p>Since deep learning and machine learning tend to be used interchangeably, it’s worth noting the nuances between the two. As mentioned above, both deep learning and machine learning are sub-fields of artificial intelligence, and deep learning is actually a sub-field of machine learning.</p>
+<p><img src="https://1.cms.s81c.com/sites/default/files/2021-08-11/Artificial-Intelligence-Circles.jpg" alt="pic"></p>
+<p>Visual Representation of how AI, ML and DL relate to one another<br>Deep learning is actually comprised of neural networks. “Deep” in deep learning refers to a neural network comprised of more than three layers—which would be inclusive of the inputs and the output—can be considered a deep learning algorithm. This is generally represented using the following diagram:<br><img src="https://1.cms.s81c.com/sites/default/files/2021-04-15/ICLH_Diagram_Batch_01_03-DeepNeuralNetwork-WHITEBG.png" alt="pic"></p>
+<p>Diagram of Deep Neural Network<br>The way in which deep learning and machine learning differ is in how each algorithm learns. Deep learning automates much of the feature extraction piece of the process, eliminating some of the manual human intervention required and enabling the use of larger data sets. You can think of deep learning as “scalable machine learning” as Lex Fridman noted in same MIT lecture from above. Classical, or “non-deep”, machine learning is more dependent on human intervention to learn. Human experts determine the hierarchy of features to understand the differences between data inputs, usually requiring more structured data to learn.</p>
+<p>“Deep” machine learning can leverage labeled datasets, also known as supervised learning, to inform its algorithm, but it doesn’t necessarily require a labeled dataset. It can ingest unstructured data in its raw form (e.g. text, images), and it can automatically determine the hierarchy of features which distinguish different categories of data from one another. Unlike machine learning, it doesn’t require human intervention to process data, allowing us to scale machine learning in more interesting ways.</p>
+<h1 id="Artificial-intelligence-applications"><a href="#Artificial-intelligence-applications" class="headerlink" title="Artificial intelligence applications"></a>Artificial intelligence applications</h1><p>There are numerous, real-world applications of AI systems today. Below are some of the most common examples:</p>
+<h2 id="Speech-recognition"><a href="#Speech-recognition" class="headerlink" title="Speech recognition"></a>Speech recognition</h2><p>It is also known as automatic speech recognition (ASR), computer speech recognition, or speech-to-text, and it is a capability which uses natural language processing (NLP) to process human speech into a written format. Many mobile devices incorporate speech recognition into their systems to conduct voice search—e.g. Siri—or provide more accessibility around texting. </p>
+<h2 id="Customer-service"><a href="#Customer-service" class="headerlink" title="Customer service"></a>Customer service</h2><p>Online virtual agents are replacing human agents along the customer journey. They answer frequently asked questions (FAQs) around topics, like shipping, or provide personalized advice, cross-selling products or suggesting sizes for users, changing the way we think about customer engagement across websites and social media platforms. Examples include messaging bots on e-commerce sites with virtual agents, messaging apps, such as Slack and Facebook Messenger, and tasks usually done by virtual assistants and voice assistants.</p>
+<h2 id="Computer-vision"><a href="#Computer-vision" class="headerlink" title="Computer vision"></a>Computer vision</h2><p>This AI technology enables computers and systems to derive meaningful information from digital images, videos and other visual inputs, and based on those inputs, it can take action. This ability to provide recommendations distinguishes it from image recognition tasks. Powered by convolutional neural networks, computer vision has applications within photo tagging in social media, radiology imaging in healthcare, and self-driving cars within the automotive industry.  </p>
+<h2 id="Recommendation-engines"><a href="#Recommendation-engines" class="headerlink" title="Recommendation engines"></a>Recommendation engines</h2><p>Using past consumption behavior data, AI algorithms can help to discover data trends that can be used to develop more effective cross-selling strategies. This is used to make relevant add-on recommendations to customers during the checkout process for online retailers.</p>
+<h2 id="Automated-stock-trading"><a href="#Automated-stock-trading" class="headerlink" title="Automated stock trading"></a>Automated stock trading</h2><p>Designed to optimize stock portfolios, AI-driven high-frequency trading platforms make thousands or even millions of trades per day without human intervention.</p>
+<h1 id="Business-use-cases-for-artificial-intelligence-today"><a href="#Business-use-cases-for-artificial-intelligence-today" class="headerlink" title="Business use cases for artificial intelligence today"></a>Business use cases for artificial intelligence today</h1><h2 id="Accelerate-data-preparation-and-improve-data-governance-with-artificial-intelligence"><a href="#Accelerate-data-preparation-and-improve-data-governance-with-artificial-intelligence" class="headerlink" title="Accelerate data preparation and improve data governance with artificial intelligence"></a>Accelerate data preparation and improve data governance with artificial intelligence</h2><h3 id="Pain-Point"><a href="#Pain-Point" class="headerlink" title="Pain Point"></a>Pain Point</h3><p>Analyses are only as good as the data that it contains, and as a result, many data scientists and analysts spend an exorbitant amount of time cleaning and organizing data to provide business valueto their organizations. For example, raw data may not comply with your business taxonomy, and as a result, data may need to be classified in a specific way to provide context to stakeholders. Alternatively, you may not have a defined taxonomy for a new dataset yet; artificial intelligence can also help define clusters of data, segmenting groups based on shared characteristics. Either way, this can be a long, manual process for large datasets if left to an individual.</p>
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>However, AI algorithms can assist in data classification tasks, reducing the cost and time to provide business insights. Labeled datasets can help categorize new data through supervised learning algorithms, while unsupervised learning can help businesses discover new clusters of data. We also asked businesses about this and we found that 39% of our survey participants identified data management and classification as a key use case of AI.</p>
+<h2 id="Streamline-operational-efficiency-with-artificial-intelligence"><a href="#Streamline-operational-efficiency-with-artificial-intelligence" class="headerlink" title="Streamline operational efficiency with artificial intelligence"></a>Streamline operational efficiency with artificial intelligence</h2><h3 id="Pain-Point-1"><a href="#Pain-Point-1" class="headerlink" title="Pain Point"></a>Pain Point</h3><p>As a business expands in size, organizational complexity can also grow with new employees and processes to help it scale. Over time, this can lead to operational inefficiencies, slowing businesses down from achieving their business goals.</p>
+<h3 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h3><p>Organizations can leverage log data from their information systems to understand the performance of their processes, revealing bottlenecks and other areas of improvement. Specialized algorithms provide insight into the root causes of deviations from the process norm, which in turn, arms managers with the information that they need to optimize them. When we dug deeper, we found that 42% of our survey participants identified IT operations as a key use case of AI.</p>
+<h2 id="Forecast-sales-with-artificial-intelligence"><a href="#Forecast-sales-with-artificial-intelligence" class="headerlink" title="Forecast sales with artificial intelligence"></a>Forecast sales with artificial intelligence</h2><h3 id="Pain-Point-2"><a href="#Pain-Point-2" class="headerlink" title="Pain Point"></a>Pain Point</h3><p>Each year, business leaders are expected to set realistic goals for their organizations, setting the strategy for the incoming year. Publicly traded companies also have the additional responsibility of sharing these future objectives during earning calls to maintain market confidence. However, in an ever-changing business landscape, it can be difficult to make commitments on sales goals with certainty, especially within large, complex organizations, where there are a variety of factors that can impact bottom-line sales numbers.</p>
+<h3 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h3><p>While sales forecasting isn’t new to the business world, the factors that impact business sales have changed over the last decade, and they’ll continue to do so. In fact, many businesses are experiencing accelerated digital transformation efforts due to the COVID-19 pandemic, which means that new data systems (and more data) can be utilized as potential factors for sales growth. AI solutions allow data teams to adapt to changing circumstances, enabling them to make sales predictions with confidence. When we asked surveyors about this, we found that 36% of respondents leverage AI for sales forecasting.</p>
+<h1 id="History-of-artificial-intelligence-Key-dates-and-names"><a href="#History-of-artificial-intelligence-Key-dates-and-names" class="headerlink" title="History of artificial intelligence: Key dates and names"></a>History of artificial intelligence: Key dates and names</h1><p>The idea of ‘a machine that thinks’ dates back to ancient Greece. But since the advent of electronic computing (and relative to some of the topics discussed in this article) important events and milestones in the evolution of artificial intelligence include the following:</p>
+<ul>
+<li>-1950: Alan Turing publishes Computing Machinery and Intelligence. In the paper, Turing—famous for breaking the Nazi’s ENIGMA code during WWII—proposes to answer the question ‘can machines think?’ and introduces the Turing Test to determine if a computer can demonstrate the same intelligence (or the results of the same intelligence) as a human. The value of the Turing test has been debated ever since.</li>
+<li>-1956: John McCarthy coins the term ‘artificial intelligence’ at the first-ever AI conference at Dartmouth College. (McCarthy would go on to invent the Lisp language.) Later that year, Allen Newell, J.C. Shaw, and Herbert Simon create the Logic Theorist, the first-ever running AI software program.</li>
+<li>-1967: Frank Rosenblatt builds the Mark 1 Perceptron, the first computer based on a neural network that ‘learned’ though trial and error. Just a year later, Marvin Minsky and Seymour Papert publish a book titled Perceptrons, which becomes both the landmark work on neural networks and, at least for a while, an argument against future neural network research projects.</li>
+<li>-1980s: Neural networks which use a backpropagation algorithm to train itself become widely used in AI applications.</li>
+<li>-1997: IBM’s Deep Blue beats then world chess champion Garry Kasparov, in a chess match (and rematch).</li>
+<li>-2011: IBM Watson beats champions Ken Jennings and Brad Rutter at Jeopardy!</li>
+<li>-2015: Baidu’s Minwa supercomputer uses a special kind of deep neural network called a convolutional neural network to identify and categorize images with a higher rate of accuracy than the average human.</li>
+<li>-2016: DeepMind’s AlphaGo program, powered by a deep neural network, beats Lee Sodol, the world champion Go player, in a five-game match. The victory is significant given the huge number of possible moves as the game progresses (over 14.5 trillion after just four moves!). Later, Google purchased DeepMind for a reported USD 400 million.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
     }
-};
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">abcgis.com</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">abcgis.com</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
